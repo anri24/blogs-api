@@ -11,13 +11,14 @@ Route::middleware('auth:sanctum')->group(function (){
         return $request->user();
     });
 
-    Route::get('/blogs',[BlogController::class,'index']);
-    Route::get('/blog/{blog}',[BlogController::class,'show']);
     Route::post('/blog/create',[BlogController::class,'store']);
-    Route::put('/blog/update/{blog}',[BlogController::class,'update']);
-    Route::delete('blog/delete/{blog}',[BlogController::class,'destroy']);
+    Route::put('/blog/update/{id}',[BlogController::class,'update']);
+    Route::delete('/blog/delete/{id}',[BlogController::class,'destroy']);
 });
-    Route::get('/blogs/limited',[BlogController::class,'getLimited']);
+
+Route::get('/blogs',[BlogController::class,'index']);
+Route::get('/blog/{id}',[BlogController::class,'show']);
+Route::get('/blogs/limited',[BlogController::class,'getLimited']);
 
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);

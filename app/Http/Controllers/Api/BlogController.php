@@ -29,25 +29,25 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Blog $blog)
+    public function show($id)
     {
-        return $this->repository->findById($blog);
+        return $this->repository->findById($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBlogRequest $request, Blog $blog)
+    public function update(UpdateBlogRequest $request, $id)
     {
-        return $this->repository->update($request->validated(),$blog);
+        return $this->repository->update($request->validated(),$id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blog $blog)
+    public function destroy($id)
     {
-        return $this->repository->delete($blog);
+        return $this->repository->delete($id);
     }
 
     public function getLimited()
