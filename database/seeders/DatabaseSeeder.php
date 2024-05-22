@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,9 +19,10 @@ class DatabaseSeeder extends Seeder
 
         Blog::factory(20)->create();
 
-//        User::factory()->create([
-//            'name' => 'Test User',
-//            'email' => 'test@example.com',
-//        ]);
+        User::factory()->create([
+            'name' => 'anri',
+            'email' => 'anri@gmail.com',
+            'password' => Hash::make('anri1234')
+        ]);
     }
 }
