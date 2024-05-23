@@ -12,9 +12,9 @@ Route::middleware('auth:sanctum')->group(function (){
     });
 
     Route::post('/blog/create',[BlogController::class,'store']);
-    Route::post('/blog/update/{id}',[BlogController::class,'update']);
     Route::delete('/blog/delete/{id}',[BlogController::class,'destroy']);
 });
+    Route::patch('/blog/update/{id}',[BlogController::class,'update']);
 
 Route::get('/blogs',[BlogController::class,'index']);
 Route::get('/blog/{id}',[BlogController::class,'show']);
