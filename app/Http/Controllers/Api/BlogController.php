@@ -7,11 +7,14 @@ use App\Models\Blog;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Repositories\BlogRepositoryInterface;
+use App\Services\BlogService;
+use Illuminate\Http\UploadedFile;
 
 class BlogController extends Controller
 {
     public function __construct(
-        protected readonly BlogRepositoryInterface $repository
+        protected readonly BlogRepositoryInterface $repository,
+        protected readonly BlogService $service,
     ){}
     public function index()
     {
@@ -23,7 +26,7 @@ class BlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
-        return $this->repository->create($request->validated());
+        return $this->service->create($request, $this->repository);
     }
 
     /**
@@ -39,7 +42,7 @@ class BlogController extends Controller
      */
     public function update(UpdateBlogRequest $request, $id)
     {
-        return $this->repository->update($request->validated(),$id);
+        return $this->service->update($request,$this->repository, $id);
     }
 
     /**
