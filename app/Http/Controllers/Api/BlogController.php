@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Blog\CreateBlogAction;
+use App\Actions\Blog\DeleteBlogAction;
+use App\Actions\Blog\UpdateBlogAction;
 use App\Http\Controllers\Controller;
-use App\Models\Blog;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Repositories\BlogRepositoryInterface;
 use App\Services\BlogService;
-use Illuminate\Http\UploadedFile;
 
 class BlogController extends Controller
 {
@@ -21,36 +24,36 @@ class BlogController extends Controller
         return $this->repository->getAll();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreBlogRequest $request)
-    {
-        return $this->service->create($request, $this->repository);
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         return $this->repository->findById($id);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Store a newly created resource in storage.
      */
-    public function update(UpdateBlogRequest $request, $id)
+    public function store(CreateBlogAction $createBlogAction,StoreBlogRequest $request)
     {
-        return $this->service->update($request,$this->repository, $id);
+        $createBlogAction->execute($request->validated());
+
+        return response()->noContent(201);
+    }
+
+    public function update(UpdateBlogAction $updateBlogAction,UpdateBlogRequest $request, $id)
+    {
+        $updateBlogAction->execute($request, $id);
+
+        return response()->noContent();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(DeleteBlogAction $deleteBlogAction,$id)
     {
-        return $this->repository->delete($id);
+        $deleteBlogAction->execute($id);
+
+        return response()->noContent(202);
     }
 
     public function getLimited()
